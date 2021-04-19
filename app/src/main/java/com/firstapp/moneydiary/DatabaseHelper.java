@@ -16,12 +16,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3="Password";
 
     public DatabaseHelper(@Nullable Context context) {
+
         super(context, DATABASE_NAME, null, 1);
     }
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL("CREATE TABLE user (User_id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Password TEXT");
+        sqLiteDatabase.execSQL("CREATE TABLE user (User_id INTEGER PRIMARY KEY AUTOINCREMENT, Username TEXT, Password TEXT)");
 
     }
 
