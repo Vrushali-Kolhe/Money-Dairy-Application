@@ -7,4 +7,14 @@
     <string name="register">REGISTER</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="already_registered">Already Registered?</string>
+    <string name="email">Email</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="view_transaction">View Transactions</string>
+    <string name="view_tasks">View Tasks</string>
+    <string name="generate_report">Generate Report</string>
+    <string name="title_activity_dashboard2">Dashboard2Activity</string>
+    <string name="update_profile">Update Profile</string>
+    <string name="change_password">Change Password</string>
+    <string name="logout">Logout</string>
+    <string name="update">Update</string>
 </resources>

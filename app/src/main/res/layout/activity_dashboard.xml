@@ -1,19 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".DashboardActivity"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:background="@drawable/background">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context=".DashboardActivity">
 
-    <TextView
-        android:layout_marginTop="250dp"
+    <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:textSize="50dp"
-        android:text="Welcome User" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:background="@drawable/background">
 
-</LinearLayout>
+        <Button
+            android:id="@+id/button_view_transaction"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="50dp"
+            android:background="#0000ff"
+            android:textSize="30sp"
+            android:text="@string/view_transaction"/>
+
+        <Button
+            android:id="@+id/button_view_task"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:background="#0000ff"
+            android:textSize="30sp"
+            android:text="@string/view_tasks"/>
+
+        <Button
+            android:id="@+id/button_generate_report"
+            android:layout_width="300dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:background="#0000ff"
+            android:textSize="30sp"
+            android:text="@string/generate_report"/>
+
+    </LinearLayout>
+
+</ScrollView>

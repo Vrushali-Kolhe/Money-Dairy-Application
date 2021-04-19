@@ -29,24 +29,24 @@ public class MainActivity extends AppCompatActivity {
         mTextViewRegister = (TextView)findViewById(R.id.textview_register);
         mTextViewRegister.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Intent resgisterIntent = new Intent(MainActivity.this,RegisterActivity.class);
-                startActivity(resgisterIntent);
+            public void onClick(View v) {
+                Intent registerIntent = new Intent(MainActivity.this,RegisterActivity.class);
+                startActivity(registerIntent);
             }
         });
 
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = mTextUsername.getText().toString().trim();
-                String pwd = mTextPassword.getText().toString().trim();
-                Boolean res = db.checkUser(user,pwd);
+                String username = mTextUsername.getText().toString().trim();
+                String password = mTextPassword.getText().toString().trim();
+                Boolean res = db.checkUser(username,password);
                 if(res== true){
                     Intent dashboardScreen = new Intent(MainActivity.this,DashboardActivity.class);
                     startActivity(dashboardScreen);
                 }
                 else{
-                    Toast.makeText(MainActivity.this,"Login Error",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"User Not Found",Toast.LENGTH_SHORT).show();
                 }
             }
         });
