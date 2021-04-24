@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
     EditText mTextUsername;
@@ -52,25 +55,56 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = mTextEmail.getText().toString().trim();
                 String phone_number = mTextPhoneNumber.getText().toString().trim();
 
-                if (password.equals(confirm_password)) {
-                    try{
-                        userModel = new UserModel(-1,username,password,email,phone_number);
+                if(!username.isEmpty()){
+                    if(!password.isEmpty()){
+                        if(!confirm_password.isEmpty()){
+                            if (!email.isEmpty() && Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                                if (!phone_number.isEmpty() && Patterns.PHONE.matcher(phone_number).matches()) {
+                                    UserModel temp = db.checkUserName(username);
+                                    if(temp==null){
+                                        if (password.equals(confirm_password)) {
+                                            try{
+                                                userModel = new UserModel(-1,username,password,email,phone_number);
+                                            }
+                                            catch (Exception e){
+                                                Toast.makeText(RegisterActivity.this, "UserModel Error", Toast.LENGTH_SHORT).show();
+                                            }
+                                            long val = db.addUser(userModel);
+                                            if (val > 0) {
+                                                Toast.makeText(RegisterActivity.this, "You have registered successfully", Toast.LENGTH_SHORT).show();
+                                                Intent moveToLogin = new Intent(RegisterActivity.this, MainActivity.class);
+                                                startActivity(moveToLogin);
+                                            }
+                                            else {
+                                                Toast.makeText(RegisterActivity.this, "Registration Error", Toast.LENGTH_SHORT).show();
+                                            }
+                                        }
+                                        else {
+                                            Toast.makeText(RegisterActivity.this, "Password are not matching", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                    else{
+                                        Toast.makeText(RegisterActivity.this, "Username exists", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                else{
+                                    Toast.makeText(RegisterActivity.this, "Invalid Phone Number", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                            else{
+                                Toast.makeText(RegisterActivity.this, "Invalid Email Address", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        else{
+                            Toast.makeText(RegisterActivity.this, "Confirm Password Required", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                    catch (Exception e){
-                        Toast.makeText(RegisterActivity.this, "UserModel Error", Toast.LENGTH_SHORT).show();
-                    }
-                    long val = db.addUser(userModel);
-                    if (val > 0) {
-                        Toast.makeText(RegisterActivity.this, "You have registered successfully", Toast.LENGTH_SHORT).show();
-                        Intent moveToLogin = new Intent(RegisterActivity.this, MainActivity.class);
-                        startActivity(moveToLogin);
-                    }
-                    else {
-                        Toast.makeText(RegisterActivity.this, "Registration Error", Toast.LENGTH_SHORT).show();
+                    else{
+                        Toast.makeText(RegisterActivity.this, "Password Required", Toast.LENGTH_SHORT).show();
                     }
                 }
-                else {
-                    Toast.makeText(RegisterActivity.this, "Password are not matching", Toast.LENGTH_SHORT).show();
+                else{
+                    Toast.makeText(RegisterActivity.this, "Username Required", Toast.LENGTH_SHORT).show();
                 }
             }
         });

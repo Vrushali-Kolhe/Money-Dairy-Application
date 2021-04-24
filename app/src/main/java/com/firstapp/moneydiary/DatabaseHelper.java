@@ -44,9 +44,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return res;
     }
 
-    public boolean checkUser(String username, String password){
-        String[] columns = { COL_1 };
+    /*public boolean checkUser(String username, String password){
         SQLiteDatabase db = getReadableDatabase();
+        String[] columns = { COL_1 };
         String selection = COL_2 + "=?" + " and " + COL_3 + "=?";
         String[] selectionArgs = { username, password};
         Cursor cursor = db.query(TABLE_NAME,columns,selection,selectionArgs,null,null,null);
@@ -59,9 +59,69 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             return false;
 
+    }*/
+
+    public UserModel checkUser(String username, String password){
+        UserModel userModel = null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor cursor = db.rawQuery("select * from "+TABLE_NAME+" where username = ? and password = ?", new String[] {username, password});
+            if(cursor.moveToFirst()){
+                userModel = new UserModel();
+                userModel.setUser_id(cursor.getInt(0));
+                userModel.setUsername(cursor.getString(1));
+                userModel.setPassword(cursor.getString(2));
+                userModel.setEmail(cursor.getString(3));
+                userModel.setPhone_Number(cursor.getString(4));
+            }
+        }
+        catch (Exception e){
+                userModel = null;
+        }
+        return userModel;
     }
 
-    public boolean updateUser(String username, String email, String phone_number){
+    public UserModel checkUserName(String username){
+        UserModel userModel = null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor cursor = db.rawQuery("select * from "+TABLE_NAME+" where username = ?", new String[] {username});
+            if(cursor.moveToFirst()){
+                userModel = new UserModel();
+                userModel.setUser_id(cursor.getInt(0));
+                userModel.setUsername(cursor.getString(1));
+                userModel.setPassword(cursor.getString(2));
+                userModel.setEmail(cursor.getString(3));
+                userModel.setPhone_Number(cursor.getString(4));
+            }
+        }
+        catch (Exception e){
+            userModel = null;
+        }
+        return userModel;
+    }
+
+    public UserModel find(int id){
+        UserModel userModel = null;
+        try {
+            SQLiteDatabase db = getReadableDatabase();
+            Cursor cursor = db.rawQuery("select * from "+TABLE_NAME+" where user_id = ?", new String[] {String.valueOf(id)});
+            if(cursor.moveToFirst()){
+                userModel = new UserModel();
+                userModel.setUser_id(cursor.getInt(0));
+                userModel.setUsername(cursor.getString(1));
+                userModel.setPassword(cursor.getString(2));
+                userModel.setEmail(cursor.getString(3));
+                userModel.setPhone_Number(cursor.getString(4));
+            }
+        }
+        catch (Exception e){
+            userModel = null;
+        }
+        return userModel;
+    }
+
+    /*public boolean updateUser(String username, String email, String phone_number){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_2,username);
@@ -80,5 +140,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else{
             return false;
         }
+    }*/
+
+    public boolean updateUser(UserModel userModel){
+        boolean res = true;
+        try {
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL_2, userModel.getUsername());
+            contentValues.put(COL_3, userModel.getPassword());
+            contentValues.put(COL_4, userModel.getEmail());
+            contentValues.put(COL_5, userModel.getPhone_Number());
+            res = db.update(TABLE_NAME, contentValues,COL_1+" = ?",new String[] {String.valueOf(userModel.getUser_id())})>0;
+        }
+        catch(Exception e){
+            res = false;
+        }
+        //db.close();
+        return res;
     }
 }

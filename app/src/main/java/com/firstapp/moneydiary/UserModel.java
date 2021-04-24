@@ -1,6 +1,8 @@
 package com.firstapp.moneydiary;
 
-public class UserModel {
+import java.io.Serializable;
+
+public class UserModel implements Serializable {
     private int User_id;
     private String Username;
     private String Password;

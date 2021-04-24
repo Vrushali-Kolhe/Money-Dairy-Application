@@ -27,6 +27,8 @@
             android:paddingLeft="5dp"
             android:background="#ffffff"
             android:drawableLeft="@drawable/username"
+            android:inputType="text"
+            android:maxLength="25"
             android:hint="@string/username" />
 
         <EditText
@@ -36,6 +38,8 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="3dp"
             android:background="#ffffff"
+            android:inputType="textPassword"
+            android:maxLength="25"
             android:drawableLeft="@drawable/password"
             android:hint="@string/password" />
 
@@ -46,6 +50,7 @@
             android:layout_marginTop="20dp"
             android:paddingLeft="3dp"
             android:background="#ffffff"
+            android:inputType="textPassword"
             android:drawableLeft="@drawable/password"
             android:hint="@string/confirm_password" />
 
@@ -57,6 +62,7 @@
             android:paddingLeft="5dp"
             android:background="#ffffff"
             android:drawableLeft="@drawable/username"
+            android:inputType="text"
             android:hint="@string/email" />
 
         <EditText
@@ -67,6 +73,7 @@
             android:paddingLeft="5dp"
             android:background="#ffffff"
             android:drawableLeft="@drawable/username"
+            android:inputType="text"
             android:hint="@string/phone_number" />
 
         <Button

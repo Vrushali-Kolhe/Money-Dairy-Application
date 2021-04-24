@@ -35,18 +35,35 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        /*mButtonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String username = mTextUsername.getText().toString().trim();
+                String password = mTextPassword.getText().toString().trim();
+                boolean res = db.checkUser(username,password);
+                if(res==false){
+                    Toast.makeText(MainActivity.this,"User Not Found",Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    Intent dashboardScreen = new Intent(MainActivity.this,DashboardActivity.class);
+                    startActivity(dashboardScreen);
+                }
+            }
+        });*/
+
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String username = mTextUsername.getText().toString().trim();
                 String password = mTextPassword.getText().toString().trim();
-                Boolean res = db.checkUser(username,password);
-                if(res== true){
-                    Intent dashboardScreen = new Intent(MainActivity.this,DashboardActivity.class);
-                    startActivity(dashboardScreen);
+                UserModel userModel = db.checkUser(username,password);
+                if(userModel==null){
+                    Toast.makeText(MainActivity.this,"User Not Found",Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(MainActivity.this,"User Not Found",Toast.LENGTH_SHORT).show();
+                    Intent dashboardScreen = new Intent(MainActivity.this,DashboardActivity.class);
+                    dashboardScreen.putExtra("userModel",userModel);
+                    startActivity(dashboardScreen);
                 }
             }
         });
