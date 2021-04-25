@@ -22,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //startActivity(new Intent(getApplicationContext(), ViewTransactionActivity.class));
+
         db = new DatabaseHelper(this);
         mTextUsername = (EditText)findViewById(R.id.edittext_username);
         mTextPassword = (EditText)findViewById(R.id.edittext_password);
@@ -38,15 +40,18 @@ public class MainActivity extends AppCompatActivity {
         mButtonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String user = mTextUsername.getText().toString().trim();
-                String pwd = mTextPassword.getText().toString().trim();
-                Boolean res = db.checkUser(user,pwd);
-                if(res== true){
-                    Toast.makeText(MainActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
-                }
-                else{
-                    Toast.makeText(MainActivity.this,"Login Error",Toast.LENGTH_SHORT).show();
-                }
+//                String user = mTextUsername.getText().toString().trim();
+//                String pwd = mTextPassword.getText().toString().trim();
+//                Boolean res = db.checkUser(user,pwd);
+//                if(res== true){
+//                    Toast.makeText(MainActivity.this,"Successfully Logged In",Toast.LENGTH_SHORT).show();
+//                }
+//                else{
+//                    Toast.makeText(MainActivity.this,"Login Error",Toast.LENGTH_SHORT).show();
+//                }
+
+                  startActivity(new Intent(getApplicationContext(), ViewTransactionActivity.class));
+
             }
         });
     }
