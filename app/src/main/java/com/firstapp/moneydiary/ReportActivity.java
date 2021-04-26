@@ -21,7 +21,7 @@ public class ReportActivity extends AppCompatActivity {
     private PieChart report;
 
     DatabaseHelper db;
-    String title = "title";
+/*    String title = "title";
     String desc = "desc";
     String income = "income";
     String health = "health";
@@ -41,7 +41,7 @@ public class ReportActivity extends AppCompatActivity {
     TransactionModel f = new TransactionModel(6,title,date,desc,100,edu);
     TransactionModel g = new TransactionModel(7,title,date,desc,100,travel);
     TransactionModel h = new TransactionModel(8,title,date,desc,100,other);
-
+*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +70,9 @@ public class ReportActivity extends AppCompatActivity {
     }
 
     private void loadPieChartData(){
-        Float Income = 0.0f, Health = 0.0f,Food = 0.0f,Shopping = 0.0f,Entertainment = 0.0f,Education = 0.0f,Travel = 0.0f,Others = 0.0f;
-        Float Total = 0.0f;
+        float Income=0.0f, Health=0.0f, Food=0.0f, Shopping=0.0f, Entertainment=0.0f, Education=0.0f, Travel=0.0f, Others=0.0f, Total=0.0f;
 
-        ArrayList<TransactionModel> t = new ArrayList<TransactionModel>();
+        /*ArrayList<TransactionModel> t = new ArrayList<TransactionModel>();
         t.add(a);
         t.add(b);
         t.add(c);
@@ -81,16 +80,87 @@ public class ReportActivity extends AppCompatActivity {
         t.add(e);
         t.add(f);
         t.add(g);
-        t.add(h);
+        t.add(h);*/
 
-        Total = Total + Health + Food + Shopping + Entertainment + Education + Travel + Others;
-        Health = Health/Total;
-        Food = Food/Total;
-        Shopping = Shopping/Total;
-        Entertainment = Entertainment/Total;
-        Education = Education/Total;
-        Travel = Travel/Total;
-        Others = Others/Total;
+        db = new DatabaseHelper(this);
+
+        ArrayList<TransactionModel> tlist = db.getAllData();
+
+
+        for (TransactionModel transaction : tlist){
+
+            if(transaction.getCategory().equals("Income")) {
+                Income = Income + transaction.getAmount();
+            }
+            if(transaction.getCategory().equals("Health")) {
+                Health = Health + transaction.getAmount();
+
+            }
+            if(transaction.getCategory().equals("Food")) {
+                Food = Food + transaction.getAmount();
+
+            }
+            if(transaction.getCategory().equals("Shopping")) {
+                Shopping = Shopping + transaction.getAmount();
+
+            }
+            if(transaction.getCategory().equals("Entertainment")) {
+                Entertainment = Entertainment + transaction.getAmount();
+
+            }
+            if(transaction.getCategory().equals("Education")) {
+                Education = Education + transaction.getAmount();
+
+            }
+            if(transaction.getCategory().equals("Travel")) {
+                Travel = Travel + transaction.getAmount();
+
+            }
+            if(transaction.getCategory().equals("Others")) {
+                Others = Others + transaction.getAmount();
+
+            }
+        }
+
+//        System.out.println(Income);
+//        System.out.println(Health);
+//        System.out.println(Food);
+//        System.out.println(Shopping);
+//        System.out.println(Entertainment);
+//        System.out.println(Education);
+//        System.out.println(Travel);
+//        System.out.println(Others);
+
+
+
+        /*for (int count = 0; count < t.size(); count++){
+            //Toast.makeText(ReportActivity.this,(int) t.get(count).getAmount(), Toast.LENGTH_SHORT).show();
+            if(t.get(count).getCategory()=="Income")
+                Income = Income +  t.get(count).getAmount();
+            else if(t.get(count).getCategory()=="Health")
+                Health = Health + t.get(count).getAmount();
+            else if(t.get(count).getCategory()=="Food")
+                Food = Food + t.get(count).getAmount();
+            else if(t.get(count).getCategory()=="Shopping")
+                Shopping = Shopping + t.get(count).getAmount();
+            else if(t.get(count).getCategory()=="Entertainment")
+                Entertainment = Entertainment + t.get(count).getAmount();
+            else if(t.get(count).getCategory()=="Education")
+                Education = Education + t.get(count).getAmount();
+            else if(t.get(count).getCategory()=="Travel")
+                Travel = Travel + t.get(count).getAmount();
+            else if(t.get(count).getCategory()=="Others")
+                Others = Others + t.get(count).getAmount();
+        }*/
+
+        Total = Health + Food + Shopping + Entertainment + Education + Travel + Others;
+        Health = (Health/Total)*100;
+        Food = (Food/Total)*100;
+        Shopping = (Shopping/Total)*100;
+        Entertainment = (Entertainment/Total)*100;
+        Education = (Education/Total)*100;
+        Travel = (Travel/Total)*100;
+        Others = (Others/Total)*100;
 
 
         ArrayList<PieEntry> entries = new ArrayList<>();
