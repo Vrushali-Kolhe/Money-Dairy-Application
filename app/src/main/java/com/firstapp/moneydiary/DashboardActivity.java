@@ -4,25 +4,60 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import java.io.Serializable;
 
 public class DashboardActivity extends AppCompatActivity {
     UserModel userModel;
+    Button mButtonViewTransaction;
+    Button mButtonViewTask;
+    Button mButtonGenerateReport;
+    DatabaseHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
 
+        db = new DatabaseHelper(this);
+        mButtonViewTransaction = (Button) findViewById(R.id.button_view_transaction);
+        mButtonViewTask = (Button) findViewById(R.id.button_view_task);
+        mButtonGenerateReport = (Button) findViewById(R.id.button_generate_report);
+
         Intent intent = getIntent();
         userModel = (UserModel) intent.getSerializableExtra("userModel");
 
+        mButtonViewTransaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent view_transaction = new Intent(DashboardActivity.this,ViewTransactionActivity.class);
+                startActivity(view_transaction);
+            }
+        });
+
+        mButtonViewTask.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent view_task = new Intent(DashboardActivity.this,ViewTask.class);
+                startActivity(view_task);
+            }
+        });
+
+        mButtonGenerateReport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent generate_report = new Intent(DashboardActivity.this,ReportActivity.class);
+                startActivity(generate_report);
+            }
+        });
     }
 
     @Override

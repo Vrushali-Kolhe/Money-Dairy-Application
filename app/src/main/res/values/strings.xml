@@ -20,4 +20,17 @@
     <string name="current_password">Current Password</string>
     <string name="new_password">New Password</string>
     <string name="done">Done</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="amount">Amount</string>
+    <string-array name="categories">
+        <item>Income</item>
+        <item>Health</item>
+        <item>Food</item>
+        <item>Shopping</item>
+        <item>Entertainment</item>
+        <item>Education</item>
+        <item>Travel</item>
+        <item>Others</item>
+    </string-array>
 </resources>

@@ -12,7 +12,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpdateProfileActivity"></activity>
+        <activity android:name=".ViewTask" />
+        <activity android:name=".UpdateTask" />
+        <activity android:name=".AddTaskActivity" />
+        <activity android:name=".UpdateTransaction" />
+        <activity android:name=".AddTransactionActivity" />
+        <activity android:name=".ViewTransactionActivity" />
+        <activity android:name=".ReportActivity" />
+        <activity android:name=".UpdateProfileActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity
             android:name=".Dashboard2Activity"
