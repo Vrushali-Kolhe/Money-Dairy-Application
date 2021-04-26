@@ -98,4 +98,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         return mTaskList.size();
     }
+
+    public void filterList(ArrayList<TaskModel> filteredList) {
+        mTaskList = filteredList;
+        notifyDataSetChanged();
+    }
 }

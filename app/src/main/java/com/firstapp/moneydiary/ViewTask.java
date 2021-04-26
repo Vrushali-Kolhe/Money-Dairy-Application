@@ -6,7 +6,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,6 +30,9 @@ public class ViewTask extends AppCompatActivity {
     //reference to
     FloatingActionButton btn_fab;
     RecyclerView rv_task;
+    EditText et_search;
+
+    ArrayList<TaskModel> taskList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +41,24 @@ public class ViewTask extends AppCompatActivity {
 
         btn_fab = findViewById(R.id.btn_fab_task);
         rv_task = findViewById(R.id.rv_task);
+        et_search = findViewById(R.id.et_search_task);
+
+        et_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                filter(s.toString());
+            }
+        });
 
         btn_fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,12 +69,13 @@ public class ViewTask extends AppCompatActivity {
         });
 
 
+
 //        ArrayList <TransactionModel> transactionList = new ArrayList<>();
 //        transactionList.add(new TransactionModel(1, "Electricity bill",   "some description", 100, "Food"));
 //        transactionList.add(new TransactionModel(1, "Electricity bill",   "some description", 100, "Food"));
 //        transactionList.add(new TransactionModel(1, "Electricity bill",   "some description", 100, "Food"));
         DatabaseHelper databaseHelper = new DatabaseHelper(ViewTask.this);
-        final ArrayList<TaskModel> taskList = databaseHelper.getAllTasks();
+        taskList = databaseHelper.getAllTasks();
         rv_task.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
 
@@ -69,24 +94,44 @@ public class ViewTask extends AppCompatActivity {
 
         rv_task.setLayoutManager(mLayoutManager);
         rv_task.setAdapter(mAdapter);
-        mAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
-            @Override
-            public void OnItemClick(int position) {
-                Intent intent = new Intent(getApplicationContext(), UpdateTask.class);
-                intent.putExtra("title", String.valueOf(taskList.get(position).getTitle()));
-                intent.putExtra("description", String.valueOf(taskList.get(position).getDescription()));
-                // intent.putExtra("amount", String.valueOf(transactionList.get(position).getAmount()));
-                intent.putExtra("category", String.valueOf(taskList.get(position).getCategory()));
-                intent.putExtra("id", taskList.get(position).getId());
-                intent.putExtra("amount", taskList.get(position).getAmount());
+        if (taskList.size()> 0) {
+            mAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
+                @Override
+                public void OnItemClick(int position) {
+                    Intent intent = new Intent(getApplicationContext(), UpdateTask.class);
+                    intent.putExtra("title", String.valueOf(taskList.get(position).getTitle()));
+                    intent.putExtra("description", String.valueOf(taskList.get(position).getDescription()));
+                    // intent.putExtra("amount", String.valueOf(transactionList.get(position).getAmount()));
+                    intent.putExtra("category", String.valueOf(taskList.get(position).getCategory()));
+                    intent.putExtra("id", taskList.get(position).getId());
+                    intent.putExtra("amount", taskList.get(position).getAmount());
 
 
-                //transactionList.get(position).
-                startActivity(intent);
-                Toast.makeText(ViewTask.this, "clicked!", Toast.LENGTH_SHORT).show();
+                    //transactionList.get(position).
+                    startActivityForResult(intent, 1);
+                    //startActivity(intent);
+                    Toast.makeText(ViewTask.this, "clicked!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+
+    }
+
+    private void filter(String text){
+        //new array list that will hold the filtered data
+        ArrayList<TaskModel> filteredList = new ArrayList<>();
+
+        //looping through existing elements
+        for (TaskModel task : taskList) {
+            //if the existing elements contains the search input
+            if (task.getTitle().toLowerCase().contains(text.toLowerCase())) {
+                //adding the element to filtered list
+                filteredList.add(task);
             }
-        });
+        }
 
+        //calling a method of the adapter class and passing the filtered list
+        mAdapter.filterList(filteredList);
     }
 
 }

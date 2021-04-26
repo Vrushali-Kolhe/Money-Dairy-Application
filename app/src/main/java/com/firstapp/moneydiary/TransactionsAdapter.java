@@ -105,4 +105,9 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
     public int getItemCount() {
         return mTransactionList.size();
     }
+
+    public void filterList(ArrayList<TransactionModel> filteredList) {
+        mTransactionList = filteredList;
+        notifyDataSetChanged();
+    }
 }
