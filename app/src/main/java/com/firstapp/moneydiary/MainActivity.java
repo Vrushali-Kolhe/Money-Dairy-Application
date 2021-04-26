@@ -58,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 String password = mTextPassword.getText().toString().trim();
                 UserModel userModel = db.checkUser(username,password);
                 if(userModel==null){
-                    Toast.makeText(MainActivity.this,"User Not Found",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this,"Invalid Username or Password",Toast.LENGTH_SHORT).show();
                 }
                 else{
                     Intent dashboardScreen = new Intent(MainActivity.this,DashboardActivity.class);
