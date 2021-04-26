@@ -53,7 +53,7 @@ public class ViewTransactionActivity extends AppCompatActivity {
 
         if (transactionList.size() > 0){
             rv_transactions.setVisibility(View.VISIBLE);
-            mAdapter = new TransactionsAdapter(this, transactionList);
+            mAdapter = new TransactionsAdapter(ViewTransactionActivity.this,this, transactionList);
             rv_transactions.setAdapter(mAdapter);
 
         }
@@ -69,7 +69,14 @@ public class ViewTransactionActivity extends AppCompatActivity {
              @Override
              public void OnItemClick(int position) {
                  Intent intent = new Intent(getApplicationContext(), UpdateTransaction.class);
-                 //intent.getExtras("title", String.valueOf())
+                 intent.putExtra("title", String.valueOf(transactionList.get(position).getTitle()));
+                 intent.putExtra("description", String.valueOf(transactionList.get(position).getDescription()));
+                // intent.putExtra("amount", String.valueOf(transactionList.get(position).getAmount()));
+                 intent.putExtra("category", String.valueOf(transactionList.get(position).getCategory()));
+                 intent.putExtra("id", transactionList.get(position).getId());
+                 intent.putExtra("amount", transactionList.get(position).getAmount());
+
+
                  //transactionList.get(position).
                  startActivity(intent);
                  Toast.makeText(ViewTransactionActivity.this, "clicked!", Toast.LENGTH_SHORT).show();

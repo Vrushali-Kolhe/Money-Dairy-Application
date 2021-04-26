@@ -17,6 +17,7 @@ import java.util.List;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME="MoneyDiary.db";
+    private Context context;
 
     public static final String TABLE_USER="User";
     public static final String USER_ID="User_id";
@@ -67,13 +68,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             + TRANSACTION_DESCRIPTION + " TEXT, "
             + TRANSACTION_CATEGORY + " TEXT )";
 
-    private static final String SQL_CREATE_TABLE_TASK = "CREATE TABLE " + TABLE_TASK + " ("
+    private static final String SQL_CREATE_TABLE_TASK = "CREATE TABLE " + TABLE_TASK + "("
             + TASK_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + TASK_TITLE + "TEXT, "
-            + TASK_DATE + "INTEGER, "
-            + TASK_AMOUNT + "REAL, "
-            + TASK_DESCRIPTION + "TEXT, "
-            + TASK_CATEGORY + "TEXT) ";
+            + TASK_TITLE + " TEXT, "
+            + TASK_DATE + " INTEGER, "
+            + TASK_AMOUNT + " REAL, "
+            + TASK_DESCRIPTION + " TEXT, "
+            + TASK_CATEGORY + " TEXT )";
 
     private static final String SQL_CREATE_TABLE_NOTIFICATION = "CREATE TABLE " + TABLE_NOTIFICATION + " ("
             + NOTIFICATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -88,6 +89,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 2);
+        this.context = context;
     }
 
     @Override
@@ -166,6 +168,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return list;
     }
 
+    ArrayList<TaskModel> getAllTasks() {
+        ArrayList<TaskModel> list = new ArrayList<>();
+        String queryString = "SELECT * FROM " + TABLE_TASK + " ORDER BY " + TASK_ID + " DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(queryString, null);
+        if(cursor.moveToFirst()){
+            do{
+                int taskId = cursor.getInt(0);
+                String title = cursor.getString(1);
+                String category = cursor.getString(2);
+                String description = cursor.getString(4);
+                float amount = cursor.getFloat(3);
+                TaskModel newTask = new TaskModel(taskId, title, description, amount, category);
+                list.add(newTask);
+
+            }while(cursor.moveToNext());
+
+        }
+        else{
+
+        }
+        cursor.close();
+        //db.close();
+
+
+        return list;
+    }
+
     public boolean insertData(TransactionModel transactionModel) {
         SQLiteDatabase db = this.getWritableDatabase();
 //        Toast.makeText(this, transactionModel.getDescription(), Toast.LENGTH_SHORT);
@@ -187,6 +217,85 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
          // Closing database connection
+    }
+
+    public boolean insertTask(TaskModel taskModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+//        Toast.makeText(this, transactionModel.getDescription(), Toast.LENGTH_SHORT);
+        ContentValues values = new ContentValues();
+        values.put(TASK_TITLE, taskModel.getTitle());
+        values.put(TASK_DESCRIPTION, taskModel.getDescription());
+        values.put(TASK_AMOUNT, taskModel.getAmount() );
+        values.put(TASK_CATEGORY, taskModel.getCategory());
+        values.put(TASK_DATE, 400);
+
+        Log.d(DATABASE_NAME, "adding values");
+        // Inserting Row
+        long result =  db.insert(TABLE_TASK, null, values);
+        db.close();
+        if (result == -1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+        // Closing database connection
+    }
+
+    void updateTransaction(String row_id, String title, String description, Float amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(TRANSACTION_TITLE, title);
+        cv.put(TRANSACTION_DESCRIPTION, description);
+        cv.put(TRANSACTION_AMOUNT, amount);
+
+        long result = db.update(TABLE_TRANSACTION, cv, "Transaction_id=?", new String[]{row_id});
+        //long result = db.update(TABLE_TRANSACTION, cv, "=" + row_id, null);
+        db.close();
+        if(result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    void updateTask(String row_id, String title, String description, Float amount){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(TASK_TITLE, title);
+        cv.put(TASK_DESCRIPTION, description);
+        cv.put(TASK_AMOUNT, amount);
+
+        long result = db.update(TABLE_TASK, cv, "Task_id=?", new String[]{row_id});
+        //long result = db.update(TABLE_TRANSACTION, cv, "=" + row_id, null);
+        db.close();
+        if(result == -1){
+            Toast.makeText(context, "Failed", Toast.LENGTH_SHORT).show();
+        }else {
+            Toast.makeText(context, "Updated Successfully!", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
+    void deleteOneRow(String row_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_TRANSACTION, "Transaction_id=?", new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void deleteOneRowTask(String row_id){
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_TASK, "Task_id=?", new String[]{row_id});
+        if(result == -1){
+            Toast.makeText(context, "Failed to Delete.", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(context, "Successfully Deleted.", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

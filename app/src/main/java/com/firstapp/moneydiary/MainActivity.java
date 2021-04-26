@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 //                    Toast.makeText(MainActivity.this,"Login Error",Toast.LENGTH_SHORT).show();
 //                }
 
-                  startActivity(new Intent(getApplicationContext(), ViewTransactionActivity.class));
+                  startActivity(new Intent(getApplicationContext(), ViewTask.class));
 
             }
         });

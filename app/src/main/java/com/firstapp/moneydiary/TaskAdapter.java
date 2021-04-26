@@ -2,57 +2,51 @@ package com.firstapp.moneydiary;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapter.TransactionsViewHolder>{
+public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder> {
     private Context mContext;
-    private ArrayList<TransactionModel> mTransactionList;
+    private ArrayList<TaskModel> mTaskList;
     private DatabaseHelper mDatabaseHelper;
-    private OnItemClickListener mListener;
+    private TaskAdapter.OnItemClickListener mListener;
     Activity activity;
-
 
     public interface OnItemClickListener{
         void OnItemClick(int position);
     }
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(TaskAdapter.OnItemClickListener listener) {
         mListener = listener;
     }
 
-    public TransactionsAdapter (Activity activity,Context context, ArrayList<TransactionModel> transactionModels){
+    public TaskAdapter (Activity activity,Context context, ArrayList<TaskModel> taskModels){
         this.mContext = context;
-        this.mTransactionList = transactionModels;
+        this.mTaskList = taskModels;
         this.activity = activity;
         mDatabaseHelper = new DatabaseHelper(context);
 
     }
 
-    public static class TransactionsViewHolder extends RecyclerView.ViewHolder {
+    public static class TaskViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView transactionTitle;
-        public TextView transactionDescription;
-        public TextView getTransactionAmount;
+        public TextView taskTitle;
+        public TextView taskDescription;
+        public TextView getTaskAmount;
         Context nContext;
 
-        public TransactionsViewHolder(@NonNull View itemView, final OnItemClickListener listener, final Context context) {
+        public TaskViewHolder(@NonNull View itemView, final TaskAdapter.OnItemClickListener listener, final Context context) {
             super(itemView);
-            transactionTitle = itemView.findViewById(R.id.transaction_title);
-            transactionDescription = itemView.findViewById(R.id.transaction_description);
-            getTransactionAmount = itemView.findViewById(R.id.transaction_amount);
+            taskTitle = itemView.findViewById(R.id.task_title);
+            taskDescription = itemView.findViewById(R.id.task_description);
+            getTaskAmount = itemView.findViewById(R.id.task_amount);
             //nContext = itemView.getContext();
 
 
@@ -81,28 +75,27 @@ public class TransactionsAdapter extends RecyclerView.Adapter<TransactionsAdapte
 
     }
 
-
     @NonNull
     @Override
-    public TransactionsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_transaction, parent, false);
-        TransactionsViewHolder tvh = new TransactionsViewHolder(view, mListener, mContext);
+    public TaskAdapter.TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
+        TaskAdapter.TaskViewHolder tvh = new TaskAdapter.TaskViewHolder(view, mListener, mContext);
         return tvh;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TransactionsViewHolder holder, int position) {
-        final TransactionModel transactions  = mTransactionList.get(position);
-        holder.transactionTitle.setText(transactions.getTitle());
-        holder.transactionDescription.setText(transactions.getDescription());
-        holder.getTransactionAmount.setText(String.valueOf(transactions.getAmount()));
-
+    public void onBindViewHolder(@NonNull TaskAdapter.TaskViewHolder holder, int position) {
+        final TaskModel tasks  = mTaskList.get(position);
+        holder.taskTitle.setText(tasks.getTitle());
+        holder.taskDescription.setText(tasks.getDescription());
+        holder.getTaskAmount.setText(String.valueOf(tasks.getAmount()));
 
 
     }
 
     @Override
     public int getItemCount() {
-        return mTransactionList.size();
+
+        return mTaskList.size();
     }
 }
