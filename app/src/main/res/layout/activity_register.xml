@@ -1,88 +1,205 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    tools:context=".RegisterActivity">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".RegisterActivity"
+    android:orientation="vertical"
+    android:padding="30dp">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:gravity="center_horizontal"
-        android:background="@drawable/background">
+        android:gravity="center_horizontal">
+<!--        android:background="@drawable/background">-->
 
-        <ImageView
-            android:layout_width="wrap_content"
+<!--        <ImageView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="60dp"-->
+<!--            app:srcCompat="@drawable/moneydiary2" />-->
+
+<!--        <EditText-->
+<!--            android:id="@+id/edittext_username"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:paddingLeft="5dp"-->
+<!--            android:background="#ffffff"-->
+<!--            android:drawableLeft="@drawable/username"-->
+<!--            android:inputType="text"-->
+<!--            android:maxLength="25"-->
+<!--            android:hint="@string/username" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="60dp"
-            app:srcCompat="@drawable/moneydiary2" />
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginTop="5dp">
 
-        <EditText
-            android:id="@+id/edittext_username"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="50dp"
-            android:paddingLeft="5dp"
-            android:background="#ffffff"
-            android:drawableLeft="@drawable/username"
-            android:inputType="text"
-            android:maxLength="25"
-            android:hint="@string/username" />
+            <EditText
+                android:id="@+id/edittext_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/username"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLength="25"
+                android:textSize="20sp"
+                />
 
-        <EditText
-            android:id="@+id/edittext_password"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="3dp"
-            android:background="#ffffff"
-            android:inputType="textPassword"
-            android:maxLength="25"
-            android:drawableLeft="@drawable/password"
-            android:hint="@string/password" />
 
-        <EditText
-            android:id="@+id/edittext_confirm_password"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="3dp"
-            android:background="#ffffff"
-            android:inputType="textPassword"
-            android:drawableLeft="@drawable/password"
-            android:hint="@string/confirm_password" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/edittext_email"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="5dp"
-            android:background="#ffffff"
-            android:drawableLeft="@drawable/username"
-            android:inputType="text"
-            android:hint="@string/email" />
 
-        <EditText
-            android:id="@+id/edittext_phone_number"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_marginTop="20dp"
-            android:paddingLeft="5dp"
-            android:background="#ffffff"
-            android:drawableLeft="@drawable/username"
-            android:inputType="text"
-            android:hint="@string/phone_number" />
+<!--        <EditText-->
+<!--            android:id="@+id/edittext_password"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:paddingLeft="3dp"-->
+<!--            android:background="#ffffff"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:maxLength="25"-->
+<!--            android:drawableLeft="@drawable/password"-->
+<!--            android:hint="@string/password" />-->
 
-        <Button
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/edittext_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/password"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:maxLength="25"
+                android:textSize="20sp"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <EditText-->
+<!--            android:id="@+id/edittext_confirm_password"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:paddingLeft="3dp"-->
+<!--            android:background="#ffffff"-->
+<!--            android:inputType="textPassword"-->
+<!--            android:drawableLeft="@drawable/password"-->
+<!--            android:hint="@string/confirm_password" />-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/edittext_confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/confirm_password"
+                android:ems="10"
+                android:inputType="textPassword"
+                android:maxLength="25"
+                android:textSize="20sp"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <EditText-->
+<!--            android:id="@+id/edittext_email"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:paddingLeft="5dp"-->
+<!--            android:background="#ffffff"-->
+<!--            android:drawableLeft="@drawable/username"-->
+<!--            android:inputType="text"-->
+<!--            android:hint="@string/email" />-->
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/edittext_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLength="25"
+                android:textSize="20sp"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <EditText-->
+<!--            android:id="@+id/edittext_phone_number"-->
+<!--            android:layout_width="200dp"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:paddingLeft="5dp"-->
+<!--            android:background="#ffffff"-->
+<!--            android:drawableLeft="@drawable/username"-->
+<!--            android:inputType="text"-->
+<!--            android:hint="@string/phone_number" />-->
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginTop="5dp">
+
+            <EditText
+                android:id="@+id/edittext_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/phone_number"
+                android:ems="10"
+                android:inputType="text"
+                android:maxLength="25"
+                android:textSize="20sp"
+                />
+
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <Button-->
+<!--            android:id="@+id/button_register"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="40dp"-->
+<!--            android:layout_marginTop="20dp"-->
+<!--            android:background="#0000ff"-->
+<!--            android:text="@string/register"/>-->
+
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/button_register"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
             android:layout_marginTop="20dp"
-            android:background="#0000ff"
-            android:text="@string/register"/>
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/register" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -90,12 +207,12 @@
             android:orientation="horizontal"
             android:layout_marginTop="15dp">
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:text="@string/already_registered" />
 
-            <TextView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textview_login"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
@@ -106,4 +223,4 @@
 
         </LinearLayout>
     </LinearLayout>
-</ScrollView>
+</LinearLayout>

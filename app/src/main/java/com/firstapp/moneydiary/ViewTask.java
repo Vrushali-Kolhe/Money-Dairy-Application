@@ -1,5 +1,6 @@
 package com.firstapp.moneydiary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,6 +30,7 @@ public class ViewTask extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private TaskAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    UserModel userModel;
 
     //reference to
     FloatingActionButton btn_fab;
@@ -38,6 +43,9 @@ public class ViewTask extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_task);
+
+        Intent intent = getIntent();
+        userModel = (UserModel) intent.getSerializableExtra("userModel");
 
         btn_fab = findViewById(R.id.btn_fab_task);
         rv_task = findViewById(R.id.rv_task);
@@ -64,6 +72,7 @@ public class ViewTask extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent registerIntent = new Intent(getApplicationContext(), AddTaskActivity.class);
+                registerIntent.putExtra("userModel",userModel);
                 startActivity(registerIntent);
             }
         });
@@ -108,6 +117,7 @@ public class ViewTask extends AppCompatActivity {
 
 
                     //transactionList.get(position).
+                    intent.putExtra("userModel",userModel);
                     startActivityForResult(intent, 1);
                     //startActivity(intent);
                     Toast.makeText(ViewTask.this, "clicked!", Toast.LENGTH_SHORT).show();
@@ -134,4 +144,35 @@ public class ViewTask extends AppCompatActivity {
         mAdapter.filterList(filteredList);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.update_profile){
+            Intent updateProfileIntent = new Intent(ViewTask.this,UpdateProfileActivity.class);
+            updateProfileIntent.putExtra("userModel",userModel);
+            startActivity(updateProfileIntent);
+        }
+        else if(item.getItemId() == R.id.change_password){
+            Intent changePasswordIntent = new Intent(ViewTask.this,ChangePasswordActivity.class);
+            changePasswordIntent.putExtra("userModel",userModel);
+            startActivity(changePasswordIntent);
+        }
+        else if(item.getItemId() == R.id.logout){
+            finish();
+            Intent logoutIntent = new Intent(getApplicationContext(),MainActivity.class);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logoutIntent);
+            Toast.makeText(ViewTask.this,"Logout Successfully",Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }

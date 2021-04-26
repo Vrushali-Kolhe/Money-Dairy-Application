@@ -1,9 +1,13 @@
 package com.firstapp.moneydiary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +22,7 @@ public class UpdateTransaction extends AppCompatActivity {
     Spinner spn_category2;
     DatabaseHelper mDatabaseHelper;
     TextView tv_date2;
+    UserModel userModel;
 
     String title, description, category;
     int id;
@@ -28,6 +33,8 @@ public class UpdateTransaction extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update_transaction);
 
+        Intent intent = getIntent();
+        userModel = (UserModel) intent.getSerializableExtra("userModel");
 
         btn_update = findViewById(R.id.btn_update);
         btn_delete = findViewById(R.id.btn_delete);
@@ -54,6 +61,7 @@ public class UpdateTransaction extends AppCompatActivity {
                     Toast.makeText(UpdateTransaction.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
                 }
                 Intent intent = new Intent(getApplicationContext(), ViewTransactionActivity.class);
+                intent.putExtra("userModel",userModel);
                 startActivity(intent);
                 finish();
             }
@@ -105,6 +113,38 @@ public class UpdateTransaction extends AppCompatActivity {
 //        }else{
 //            Toast.makeText(this, "No data.", Toast.LENGTH_SHORT).show();
 //        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.update_profile){
+            Intent updateProfileIntent = new Intent(UpdateTransaction.this,UpdateProfileActivity.class);
+            updateProfileIntent.putExtra("userModel",userModel);
+            startActivity(updateProfileIntent);
+        }
+        else if(item.getItemId() == R.id.change_password){
+            Intent changePasswordIntent = new Intent(UpdateTransaction.this,ChangePasswordActivity.class);
+            changePasswordIntent.putExtra("userModel",userModel);
+            startActivity(changePasswordIntent);
+        }
+        else if(item.getItemId() == R.id.logout){
+            finish();
+            Intent logoutIntent = new Intent(getApplicationContext(),MainActivity.class);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logoutIntent);
+            Toast.makeText(UpdateTransaction.this,"Logout Successfully",Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

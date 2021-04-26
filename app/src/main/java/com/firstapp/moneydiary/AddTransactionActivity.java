@@ -1,11 +1,15 @@
 package com.firstapp.moneydiary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.ButtonBarLayout;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,6 +30,7 @@ public class AddTransactionActivity extends AppCompatActivity implements Adapter
     DatabaseHelper mDatabaseHelper;
     TextView tv_date;
     String date = "Wed Mar 27 08:22:02 IST 2015";
+    UserModel userModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +38,9 @@ public class AddTransactionActivity extends AppCompatActivity implements Adapter
         setContentView(R.layout.activity_add_transaction);
 
         mDatabaseHelper = new DatabaseHelper(this);
+
+        Intent intent = getIntent();
+        userModel = (UserModel) intent.getSerializableExtra("userModel");
 
         btn_add = findViewById(R.id.btn_add);
         btn_date = findViewById(R.id.btn_datepicker);
@@ -69,12 +77,16 @@ public class AddTransactionActivity extends AppCompatActivity implements Adapter
                     boolean insertData = mDatabaseHelper.insertData(transactionModel);
                     if (insertData) {
                         Toast.makeText(AddTransactionActivity.this, "Transaction added!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), ViewTransactionActivity.class));
+                        Intent intent = new Intent(AddTransactionActivity.this,ViewTransactionActivity.class);
+                        intent.putExtra("userModel",userModel);
+                        startActivity(intent);
 
                     }
                     else{
                         Toast.makeText(AddTransactionActivity.this, "Transaction not added!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(getApplicationContext(), ViewTransactionActivity.class));
+                        Intent intent1 = new Intent(AddTransactionActivity.this,ViewTransactionActivity.class);
+                        intent1.putExtra("userModel",userModel);
+                        startActivity(intent1);
 
                     }
 
@@ -114,4 +126,37 @@ public class AddTransactionActivity extends AppCompatActivity implements Adapter
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.update_profile){
+            Intent updateProfileIntent = new Intent(AddTransactionActivity.this,UpdateProfileActivity.class);
+            updateProfileIntent.putExtra("userModel",userModel);
+            startActivity(updateProfileIntent);
+        }
+        else if(item.getItemId() == R.id.change_password){
+            Intent changePasswordIntent = new Intent(AddTransactionActivity.this,ChangePasswordActivity.class);
+            changePasswordIntent.putExtra("userModel",userModel);
+            startActivity(changePasswordIntent);
+        }
+        else if(item.getItemId() == R.id.logout){
+            finish();
+            Intent logoutIntent = new Intent(getApplicationContext(),MainActivity.class);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logoutIntent);
+            Toast.makeText(AddTransactionActivity.this,"Logout Successfully",Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
 }

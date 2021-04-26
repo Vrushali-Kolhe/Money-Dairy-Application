@@ -39,6 +39,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent view_transaction = new Intent(DashboardActivity.this,ViewTransactionActivity.class);
+                view_transaction.putExtra("userModel",userModel);
                 startActivity(view_transaction);
             }
         });
@@ -47,6 +48,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent view_task = new Intent(DashboardActivity.this,ViewTask.class);
+                view_task.putExtra("userModel",userModel);
                 startActivity(view_task);
             }
         });
@@ -55,6 +57,7 @@ public class DashboardActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent generate_report = new Intent(DashboardActivity.this,ReportActivity.class);
+                generate_report.putExtra("userModel",userModel);
                 startActivity(generate_report);
             }
         });

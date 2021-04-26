@@ -1,5 +1,6 @@
 package com.firstapp.moneydiary;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,6 +26,9 @@ public class ViewTransactionActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private TransactionsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    UserModel userModel;
+
+
 
     //reference to
     FloatingActionButton btn_fab;
@@ -40,10 +47,14 @@ public class ViewTransactionActivity extends AppCompatActivity {
         rv_transactions = findViewById(R.id.rv_transactions);
         et_search = findViewById(R.id.et_search);
 
+        Intent intent = getIntent();
+        userModel = (UserModel) intent.getSerializableExtra("userModel");
+
         btn_fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent registerIntent = new Intent(getApplicationContext(), AddTransactionActivity.class);
+                registerIntent.putExtra("userModel",userModel);
                 startActivity(registerIntent);
             }
         });
@@ -105,6 +116,7 @@ public class ViewTransactionActivity extends AppCompatActivity {
 
 
                      //transactionList.get(position).
+                     intent.putExtra("userModel",userModel);
                      startActivity(intent);
                      Toast.makeText(ViewTransactionActivity.this, "clicked!", Toast.LENGTH_SHORT).show();
                  }
@@ -128,6 +140,38 @@ public class ViewTransactionActivity extends AppCompatActivity {
 
         //calling a method of the adapter class and passing the filtered list
         mAdapter.filterList(filteredList);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if(item.getItemId() == R.id.update_profile){
+            Intent updateProfileIntent = new Intent(ViewTransactionActivity.this,UpdateProfileActivity.class);
+            updateProfileIntent.putExtra("userModel",userModel);
+            startActivity(updateProfileIntent);
+        }
+        else if(item.getItemId() == R.id.change_password){
+            Intent changePasswordIntent = new Intent(ViewTransactionActivity.this,ChangePasswordActivity.class);
+            changePasswordIntent.putExtra("userModel",userModel);
+            startActivity(changePasswordIntent);
+        }
+        else if(item.getItemId() == R.id.logout){
+            finish();
+            Intent logoutIntent = new Intent(getApplicationContext(),MainActivity.class);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logoutIntent);
+            Toast.makeText(ViewTransactionActivity.this,"Logout Successfully",Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
