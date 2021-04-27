@@ -66,9 +66,9 @@ public class UpdateTask extends AppCompatActivity {
                 }else {
                     Toast.makeText(UpdateTask.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
                 }
-                Intent intent = new Intent(getApplicationContext(), ViewTask.class);
-                intent.putExtra("userModel",userModel);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), ViewTask.class);
+                //intent.putExtra("userModel",userModel);
+                //startActivity(intent);
                 finish();
             }
         });
