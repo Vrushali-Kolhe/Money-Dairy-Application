@@ -26,6 +26,8 @@ public class ViewTransactionActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private TransactionsAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private DatabaseHelper databaseHelper;
+    
     UserModel userModel;
 
 
@@ -46,6 +48,7 @@ public class ViewTransactionActivity extends AppCompatActivity {
         btn_fab = findViewById(R.id.btn_fab);
         rv_transactions = findViewById(R.id.rv_transactions);
         et_search = findViewById(R.id.et_search);
+        refresh_transaction = findViewById(R.id.refresh_transaction);
 
         Intent intent = getIntent();
         userModel = (UserModel) intent.getSerializableExtra("userModel");
@@ -56,6 +59,16 @@ public class ViewTransactionActivity extends AppCompatActivity {
                 Intent registerIntent = new Intent(getApplicationContext(), AddTransactionActivity.class);
                 registerIntent.putExtra("userModel",userModel);
                 startActivity(registerIntent);
+            }
+        });
+        
+        refresh_transaction.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+               transactionList = databaseHelper.getAllData();
+                mAdapter.filterList(transactionList);
+                //refresh_transaction.setOnRefreshListener();
+                refresh_transaction.setRefreshing(false);
             }
         });
 
@@ -82,7 +95,7 @@ public class ViewTransactionActivity extends AppCompatActivity {
 //        transactionList.add(new TransactionModel(1, "Electricity bill",   "some description", 100, "Food"));
 //        transactionList.add(new TransactionModel(1, "Electricity bill",   "some description", 100, "Food"));
 //        transactionList.add(new TransactionModel(1, "Electricity bill",   "some description", 100, "Food"));
-        DatabaseHelper databaseHelper = new DatabaseHelper(ViewTransactionActivity.this);
+        databaseHelper = new DatabaseHelper(ViewTransactionActivity.this);
         transactionList = databaseHelper.getAllData();
         rv_transactions.setHasFixedSize(true);
         mLayoutManager = new LinearLayoutManager(this);
