@@ -84,16 +84,18 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
                 boolean insertData = mDatabaseHelper.insertTask(taskModel);
                 if (insertData) {
                     Toast.makeText(AddTaskActivity.this, "Task added!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), ViewTask.class);
-                    intent.putExtra("userModel",userModel);
-                    startActivity(intent);
+                    //Intent intent = new Intent(getApplicationContext(), ViewTask.class);
+                    //intent.putExtra("userModel",userModel);
+                    //startActivity(intent);
+                    finish();
 
                 }
                 else{
                     Toast.makeText(AddTaskActivity.this, "Task not added!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), ViewTask.class);
-                    intent.putExtra("userModel",userModel);
-                    startActivity(intent);
+                    //Intent intent = new Intent(getApplicationContext(), ViewTask.class);
+                    //intent.putExtra("userModel",userModel);
+                    //startActivity(intent);
+                    finish();
 
 
                 }
