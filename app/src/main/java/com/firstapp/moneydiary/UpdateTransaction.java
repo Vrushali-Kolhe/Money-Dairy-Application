@@ -60,9 +60,9 @@ public class UpdateTransaction extends AppCompatActivity {
                 }else {
                     Toast.makeText(UpdateTransaction.this, "Updated Successfully!", Toast.LENGTH_SHORT).show();
                 }
-                Intent intent = new Intent(getApplicationContext(), ViewTransactionActivity.class);
-                intent.putExtra("userModel",userModel);
-                startActivity(intent);
+                //Intent intent = new Intent(getApplicationContext(), ViewTransactionActivity.class);
+                //intent.putExtra("userModel",userModel);
+                //startActivity(intent);
                 finish();
             }
         });
