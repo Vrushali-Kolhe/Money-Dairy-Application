@@ -77,16 +77,18 @@ public class AddTransactionActivity extends AppCompatActivity implements Adapter
                     boolean insertData = mDatabaseHelper.insertData(transactionModel);
                     if (insertData) {
                         Toast.makeText(AddTransactionActivity.this, "Transaction added!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(AddTransactionActivity.this,ViewTransactionActivity.class);
-                        intent.putExtra("userModel",userModel);
-                        startActivity(intent);
+                        //Intent intent = new Intent(AddTransactionActivity.this,ViewTransactionActivity.class);
+                        //intent.putExtra("userModel",userModel);
+                        //startActivity(intent);
+                        finish();
 
                     }
                     else{
                         Toast.makeText(AddTransactionActivity.this, "Transaction not added!", Toast.LENGTH_SHORT).show();
-                        Intent intent1 = new Intent(AddTransactionActivity.this,ViewTransactionActivity.class);
-                        intent1.putExtra("userModel",userModel);
-                        startActivity(intent1);
+                        //Intent intent1 = new Intent(AddTransactionActivity.this,ViewTransactionActivity.class);
+                        //intent1.putExtra("userModel",userModel);
+                        //startActivity(intent1);
+                        finish();
 
                     }
 
