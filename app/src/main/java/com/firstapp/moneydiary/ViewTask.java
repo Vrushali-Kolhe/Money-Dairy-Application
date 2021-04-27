@@ -30,12 +30,14 @@ public class ViewTask extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private TaskAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
+    private DatabaseHelper databaseHelper;
     UserModel userModel;
 
     //reference to
     FloatingActionButton btn_fab;
     RecyclerView rv_task;
     EditText et_search;
+    SwipeRefreshLayout refresh_task;
 
     ArrayList<TaskModel> taskList;
 
@@ -50,6 +52,7 @@ public class ViewTask extends AppCompatActivity {
         btn_fab = findViewById(R.id.btn_fab_task);
         rv_task = findViewById(R.id.rv_task);
         et_search = findViewById(R.id.et_search_task);
+        refresh_task = findViewById(R.id.refresh_task);
 
         et_search.addTextChangedListener(new TextWatcher() {
             @Override
@@ -65,6 +68,16 @@ public class ViewTask extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 filter(s.toString());
+            }
+        });
+        
+        refresh_task.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                taskList = databaseHelper.getAllTasks();
+                mAdapter.filterList(taskList);
+                //refresh_transaction.setOnRefreshListener();
+                refresh_task.setRefreshing(false);
             }
         });
 
