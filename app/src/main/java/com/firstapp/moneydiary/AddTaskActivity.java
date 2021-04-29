@@ -1,4 +1,5 @@
 package com.firstapp.moneydiary;
+import androidx.annotation.NonNull;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -37,6 +38,7 @@ public abstract class AddTaskActivity extends AppCompatActivity implements TimeP
     TextView tv_date;
     String date = "Wed Mar 27 08:22:02 IST 2015";
     Time remindertime;
+    UserModel userModel;
 
 
     @Override
@@ -55,7 +57,9 @@ public abstract class AddTaskActivity extends AppCompatActivity implements TimeP
         spn_category = findViewById(R.id.spn_category_task);
         tv_date = findViewById(R.id.tv_date_task);
 
-
+        Intent intent = getIntent();
+        userModel = (UserModel) intent.getSerializableExtra("userModel");
+        
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.categories, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spn_category.setAdapter(adapter);
@@ -159,6 +163,37 @@ public abstract class AddTaskActivity extends AppCompatActivity implements TimeP
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_menu, menu);
+        return true;
+    }
 
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
+        if(item.getItemId() == R.id.update_profile){
+            Intent updateProfileIntent = new Intent(AddTaskActivity.this,UpdateProfileActivity.class);
+            updateProfileIntent.putExtra("userModel",userModel);
+            startActivity(updateProfileIntent);
+        }
+        else if(item.getItemId() == R.id.change_password){
+            Intent changePasswordIntent = new Intent(AddTaskActivity.this,ChangePasswordActivity.class);
+            changePasswordIntent.putExtra("userModel",userModel);
+            startActivity(changePasswordIntent);
+        }
+        else if(item.getItemId() == R.id.logout){
+            finish();
+            Intent logoutIntent = new Intent(getApplicationContext(),MainActivity.class);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            logoutIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(logoutIntent);
+            Toast.makeText(AddTaskActivity.this,"Logout Successfully",Toast.LENGTH_SHORT).show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
+
+
