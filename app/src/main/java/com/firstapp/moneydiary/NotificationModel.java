@@ -36,7 +36,7 @@ public class NotificationModel implements Serializable {
         return remindertime;
     }
 
-    public void ReminderTime(String date) {
+    public void setReminderTime(String date) {
         this.remindertime = remindertime;
     }
 
