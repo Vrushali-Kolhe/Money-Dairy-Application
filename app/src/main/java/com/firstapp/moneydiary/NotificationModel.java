@@ -1,16 +1,18 @@
 package com.firstapp.moneydiary;
 
+import android.text.format.Time;
+
 import java.io.Serializable;
 
 public class NotificationModel implements Serializable {
     private int id;
     private String type;
-    private String remindertime;
+    private Time remindertime;
 
     public NotificationModel() {
     }
 
-    public NotificationModel(int id, String type, String remindertime) {
+    public NotificationModel(int id, String type, Time remindertime) {
         this.id = id;
         this.type = type;
         this.remindertime = remindertime;
@@ -28,15 +30,15 @@ public class NotificationModel implements Serializable {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(String title) {
         this.type = type;
     }
 
-    public String getReminderTime() {
+    public Time getReminderTime() {
         return remindertime;
     }
 
-    public void setReminderTime(String remindertime) {
+    public void ReminderTime(String date) {
         this.remindertime = remindertime;
     }
 
