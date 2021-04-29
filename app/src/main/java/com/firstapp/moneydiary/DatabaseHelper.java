@@ -43,7 +43,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String TABLE_NOTIFICATION="Notification";
     public static final String NOTIFICATION_ID="Notification_id";
     public static final String NOTIFICATION_TYPE="Notification_Type";
-    //public static final String REMINDER_DATE="Reminder_Date";
     public static final String REMINDER_TIME="Reminder_Time";
 
     public static final String TABLE_REPEAT="Repeat";
@@ -77,7 +76,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String SQL_CREATE_TABLE_NOTIFICATION = "CREATE TABLE " + TABLE_NOTIFICATION + "("
             + NOTIFICATION_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
             + NOTIFICATION_TYPE + " TEXT, "
-            //+ REMINDER_DATE + " DATETIME DEFAULT CURRENT_DATE, "
             + REMINDER_TIME + " DATETIME DEFAULT CURRENT_TIME )";
 
     private static final String SQL_CREATE_TABLE_REPEAT = "CREATE TABLE " + TABLE_REPEAT + "("
@@ -396,12 +394,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
-    public boolean insertNotification(NotificationModel notifacationModel) {
+
+    public boolean insertNotification(NotificationModel notificationModel) {
         SQLiteDatabase db = this.getWritableDatabase();
 //        Toast.makeText(this, transactionModel.getDescription(), Toast.LENGTH_SHORT);
         ContentValues values = new ContentValues();
-        values.put(NOTIFICATION_TYPE, notifacationModel.getType());
-        values.put(REMINDER_TIME, notifacationModel.getReminderTime());
+        values.put(NOTIFICATION_TYPE, notificationModel.getType());
+        values.put(REMINDER_TIME, notificationModel.getReminderTime());
 
         Log.d(DATABASE_NAME, "adding values");
         // Inserting Row
@@ -414,6 +413,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
         // Closing database connection
-    } 
+    }
 
 }
