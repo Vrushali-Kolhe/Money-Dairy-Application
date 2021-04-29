@@ -396,5 +396,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true;
         }
     }
+    public boolean inserNotification(NotificationModel notifacationModel) {
+        SQLiteDatabase db = this.getWritableDatabase();
+//        Toast.makeText(this, transactionModel.getDescription(), Toast.LENGTH_SHORT);
+        ContentValues values = new ContentValues();
+        values.put(NOTIFICATION_TYPE, notifacationModel.getType());
+        values.put(REMINDER_TIME, notifacationModel.getReminderTime());
+
+        Log.d(DATABASE_NAME, "adding values");
+        // Inserting Row
+        long result =  db.insert(TABLE_NOTIFICATION, null, values);
+        db.close();
+        if (result == -1) {
+            return false;
+        }
+        else {
+            return true;
+        }
+        // Closing database connection
+    } 
 
 }
