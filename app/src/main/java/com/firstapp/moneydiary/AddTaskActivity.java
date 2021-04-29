@@ -77,6 +77,17 @@ public class AddTaskActivity extends AppCompatActivity implements TimePickerDial
             @Override
             public void onClick(View v) {
                 tpd.show(TimePickerDialog);
+                NotificationModel notificationModel = new NotificationModel(1,
+          
+                        type,
+                        et_remindertime.getText().toString(),
+                
+                Toast.makeText(AddTaskActivity.this, notificationModel.getTitle(), Toast.LENGTH_SHORT);
+                boolean insertNotification = mDatabaseHelper.insertNotification(tnotificationModel);
+                if (insertNotification) {
+                    Toast.makeText(AddTaskActivity.this, "Notification created!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(getApplicationContext(), ViewTask.class));
+
             }
         });
         
