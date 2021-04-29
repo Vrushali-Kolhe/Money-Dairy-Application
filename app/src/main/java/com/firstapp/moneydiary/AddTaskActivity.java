@@ -21,14 +21,16 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class AddTaskActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class AddTaskActivity extends AppCompatActivity implements TimePickerDialog.OnTimeSetListener,AdapterView.OnItemSelectedListener {
 
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
 //        setContentView(R.layout.activity_add_task);
 //    }
-    Button btn_add, btn_date;
+    Calendar now = Calendar.getInstance();
+    TimePickerDialog tpd;
+    Button btn_add, btn_date, btn_setnotification;
     EditText et_title, et_description, et_amount;
     Spinner spn_category;
     DatabaseHelper mDatabaseHelper;
@@ -47,6 +49,7 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         mDatabaseHelper = new DatabaseHelper(this);
 
         btn_add = findViewById(R.id.btn_add_task);
+        btn_setnotification = findViewById(R.id.btn_set_notification);
         btn_date = findViewById(R.id.btn_datepicker_task);
         et_title = findViewById(R.id.et_title_task);
         et_description =  findViewById(R.id.et_description_task);
@@ -63,6 +66,20 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         spn_category.setAdapter(adapter);
         spn_category.setOnItemSelectedListener(this);
 
+        tpd = TimePickerDialog.newInstance(
+                AddTaskActivity.this,
+                now.get(Calendar.HOUR_OF_DAY),
+                now.get(Calendar.MINUTE),
+                now.get(Calendar.SECOND)
+        );
+
+        btn_setnotification.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tpd.show(TimePickerDialog);
+            }
+        });
+        
         btn_date.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,7 +139,12 @@ public class AddTaskActivity extends AppCompatActivity implements AdapterView.On
         Toast.makeText(this, "date button", Toast.LENGTH_SHORT).show();
     }
 
-
+    @Override
+    public void onTimeSet(TimePickerDialog view, int hourOfDay, int minute, int second) {
+        now.set(Calendar.HOUR_OF_DAY,hourOfDay);
+        now.set(Calendar.MINUTE,minute);
+        now.set(Calendar.SECOND,second);
+    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
