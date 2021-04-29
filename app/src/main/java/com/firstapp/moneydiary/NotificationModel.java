@@ -28,7 +28,7 @@ public class NotificationModel implements Serializable {
         return type;
     }
 
-    public void setType(String title) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -36,7 +36,7 @@ public class NotificationModel implements Serializable {
         return remindertime;
     }
 
-    public void setReminderTime(String date) {
+    public void setReminderTime(String remindertime) {
         this.remindertime = remindertime;
     }
 
